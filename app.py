@@ -7,9 +7,14 @@ st.set_page_config(page_title="Real Estate Buyer Intelligence", page_icon="🏠"
 
 @st.cache_data
 def load_data():
-    df=pd.read_csv("buyer_segmentation_results.csv")
-    tx=pd.read_csv("transactions_cleaned.csv")
-    return df,tx
+    df = pd.read_csv("buyer_segmentation_results.csv")
+
+    # Handle an extra blank/unnamed first row in the uploaded CSV
+    if "country" not in df.columns:
+        df = pd.read_csv("buyer_segmentation_results.csv", skiprows=1)
+
+    tx = pd.read_csv("transactions_cleaned.csv")
+    return df, tx
 
 df,tx=load_data()
 
